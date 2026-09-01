@@ -1,1 +1,833 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<title>VYBE Size Finder</title>
 
+<style>
+:root{
+  --bg:#ffffff;
+  --card:#f6f6f6;
+  --text:#111111;
+  --muted:#707070;
+  --border:#dedede;
+  --input:#ffffff;
+  --button:#111111;
+  --buttonText:#ffffff;
+  --success:#16833b;
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#090909;
+    --card:#151515;
+    --text:#ffffff;
+    --muted:#a3a3a3;
+    --border:#292929;
+    --input:#111111;
+    --button:#ffffff;
+    --buttonText:#000000;
+    --success:#42d477;
+  }
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
+}
+
+.container{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  padding:22px 18px 35px;
+}
+
+header{
+  text-align:center;
+  padding:12px 0 25px;
+}
+
+.logo{
+  width:115px;
+  height:auto;
+  max-height:90px;
+  object-fit:contain;
+  margin-bottom:8px;
+}
+
+.brand-title{
+  font-size:13px;
+  letter-spacing:4px;
+  font-weight:700;
+  margin-top:3px;
+}
+
+.subtitle{
+  color:var(--muted);
+  font-size:14px;
+  margin-top:8px;
+}
+
+.language{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-bottom:20px;
+}
+
+.lang-btn{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  padding:8px 18px;
+  border-radius:30px;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.lang-btn.active{
+  background:var(--button);
+  color:var(--buttonText);
+}
+
+.step{
+  display:none;
+}
+
+.step.active{
+  display:block;
+}
+
+h1{
+  font-size:25px;
+  margin:5px 0 8px;
+}
+
+.description{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
+  margin-bottom:22px;
+}
+
+.categories{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.category{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:16px;
+  padding:20px 8px;
+  text-align:center;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.category:hover,
+.category.selected{
+  transform:translateY(-2px);
+  border-color:var(--text);
+}
+
+.category-icon{
+  display:block;
+  font-size:27px;
+  margin-bottom:8px;
+}
+
+.form-group{
+  margin-bottom:17px;
+}
+
+label{
+  display:block;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+input{
+  width:100%;
+  border:1px solid var(--border);
+  background:var(--input);
+  color:var(--text);
+  border-radius:13px;
+  padding:15px;
+  font-size:16px;
+  outline:none;
+}
+
+input:focus{
+  border-color:var(--text);
+}
+
+.unit{
+  position:relative;
+}
+
+.unit span{
+  position:absolute;
+  left:15px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--muted);
+  font-size:13px;
+  pointer-events:none;
+}
+
+.unit input{
+  padding-left:50px;
+}
+
+.primary{
+  width:100%;
+  border:0;
+  background:var(--button);
+  color:var(--buttonText);
+  padding:16px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:8px;
+}
+
+.secondary{
+  width:100%;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+  padding:14px;
+  border-radius:14px;
+  font-size:14px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.result{
+  text-align:center;
+}
+
+.result-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:27px 18px;
+  margin-top:20px;
+}
+
+.result-label{
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:7px;
+}
+
+.size{
+  font-size:58px;
+  font-weight:900;
+  line-height:1;
+  margin:10px 0;
+}
+
+.fit{
+  color:var(--success);
+  font-size:14px;
+  font-weight:700;
+}
+
+.note{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+  margin-top:16px;
+}
+
+.whatsapp{
+  display:block;
+  width:100%;
+  background:#25D366;
+  color:#fff;
+  text-decoration:none;
+  padding:16px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:700;
+  margin-top:18px;
+}
+
+.privacy-box{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:14px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+  margin-top:18px;
+}
+
+.back{
+  background:none;
+  border:0;
+  color:var(--muted);
+  font-size:14px;
+  padding:5px 0 18px;
+  cursor:pointer;
+}
+
+.error{
+  color:#d33;
+  font-size:13px;
+  margin-top:7px;
+  display:none;
+}
+
+.footer{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:28px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+  <img
+    class="logo"
+    src="https://i.ibb.co/tTYjDh9r/VYBE-20260825-151712.png"
+    alt="VYBE"
+  >
+  <div class="brand-title">VYBE SIZE FINDER</div>
+  <div class="subtitle" id="subtitle">اعرف مقاسك المناسب بسهولة</div>
+</header>
+
+<div class="language">
+  <button class="lang-btn active" id="arBtn" onclick="setLanguage('ar')">العربية</button>
+  <button class="lang-btn" id="enBtn" onclick="setLanguage('en')">English</button>
+</div>
+
+<!-- STEP 1 -->
+<section id="step1" class="step active">
+
+  <h1 id="chooseTitle">اختار الفئة</h1>
+  <div class="description" id="chooseDesc">
+    اختار الفئة أولًا حتى نستخدم جدول المقاسات المناسب.
+  </div>
+
+  <div class="categories">
+
+    <button class="category" onclick="selectCategory('men')">
+      <span class="category-icon">👕</span>
+      <span id="menText">رجال</span>
+    </button>
+
+    <button class="category" onclick="selectCategory('women')">
+      <span class="category-icon">👚</span>
+      <span id="womenText">نساء</span>
+    </button>
+
+    <button class="category" onclick="selectCategory('kids')">
+      <span class="category-icon">🧒</span>
+      <span id="kidsText">أطفال</span>
+    </button>
+
+  </div>
+
+</section>
+
+<!-- STEP 2 -->
+<section id="step2" class="step">
+
+  <button class="back" onclick="goBack()">← <span id="backText">رجوع</span></button>
+
+  <h1 id="detailsTitle">بياناتك</h1>
+
+  <div class="description" id="detailsDesc">
+    أدخل طولك ووزنك، وسنساعدك في اختيار المقاس الأقرب.
+  </div>
+
+  <div class="form-group">
+    <label id="heightLabel">الطول</label>
+    <div class="unit">
+      <input id="height" type="number" min="50" max="230" inputmode="numeric" placeholder="مثال: 179">
+      <span>cm</span>
+    </div>
+    <div class="error" id="heightError"></div>
+  </div>
+
+  <div class="form-group">
+    <label id="weightLabel">الوزن</label>
+    <div class="unit">
+      <input id="weight" type="number" min="5" max="250" inputmode="numeric" placeholder="مثال: 80">
+      <span>kg</span>
+    </div>
+    <div class="error" id="weightError"></div>
+  </div>
+
+  <div class="form-group" id="ageGroup">
+    <label id="ageLabel">العمر</label>
+    <div class="unit">
+      <input id="age" type="number" min="1" max="100" inputmode="numeric" placeholder="مثال: 25">
+      <span id="ageUnit">سنة</span>
+    </div>
+    <div class="error" id="ageError"></div>
+  </div>
+
+  <button class="primary" onclick="calculate()" id="calculateBtn">
+    اعرف مقاسي
+  </button>
+
+  <div class="privacy-box" id="privacy">
+    معلوماتك تُستخدم فقط لحساب المقاس داخل هذه الصفحة ولا يتم حفظها.
+  </div>
+
+</section>
+
+<!-- STEP 3 -->
+<section id="step3" class="step">
+
+  <button class="back" onclick="restart()">← <span id="againText">ابدأ من جديد</span></button>
+
+  <div class="result">
+
+    <h1 id="resultTitle">المقاس المقترح لك</h1>
+
+    <div class="result-card">
+
+      <div class="result-label" id="yourSize">مقاسك المقترح</div>
+
+      <div class="size" id="sizeResult">M</div>
+
+      <div class="fit" id="fitResult">
+        هذا هو المقاس الأقرب لبياناتك
+      </div>
+
+      <div class="note" id="resultNote">
+        المقاس المقترح يعتمد على الطول والوزن والعمر والفئة المختارة.
+      </div>
+
+    </div>
+
+    <a
+      class="whatsapp"
+      href="https://wa.me/qr/BVRVWLUQNHJIE1"
+      target="_blank"
+      id="whatsappBtn"
+    >
+      CHAT WITH VYBE
+    </a>
+
+    <div class="privacy-box" id="whatsappNote">
+      هذا الزر سينقلك إلى محادثة VYBE على واتساب للشراء أو الاستفسار.
+      <br>
+      عند دخولك للمحادثة أنت حر في اختيار ما تريد كتابته، ولا يوجد أي التزام بالشراء.
+    </div>
+
+  </div>
+
+</section>
+
+<div class="footer">
+  VYBE © 2026
+</div>
+
+</div>
+
+<script>
+
+const sizes = {
+
+  men: [
+    {size:"XS", height:61, width:46},
+    {size:"S", height:70, width:48},
+    {size:"M", height:73, width:50},
+    {size:"L", height:75, width:52},
+    {size:"XL", height:77, width:56},
+    {size:"2XL", height:79, width:64},
+    {size:"3XL", height:81, width:67}
+  ],
+
+  women: [
+    {size:"XS", height:63, width:38},
+    {size:"S", height:66, width:40},
+    {size:"M", height:68, width:44},
+    {size:"L", height:70, width:47},
+    {size:"XL", height:73, width:50}
+  ],
+
+  kids: [
+    {size:"2Y", height:36, width:31},
+    {size:"4Y", height:41, width:34},
+    {size:"6Y", height:46, width:37},
+    {size:"8Y", height:51, width:40},
+    {size:"10Y", height:56, width:43},
+    {size:"12Y", height:59, width:45}
+  ]
+
+};
+
+let category = "";
+let language = "ar";
+
+function setLanguage(lang){
+
+  language = lang;
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+  document.getElementById("arBtn").classList.toggle("active",lang==="ar");
+  document.getElementById("enBtn").classList.toggle("active",lang==="en");
+
+  if(lang==="en"){
+
+    document.getElementById("subtitle").textContent =
+      "Find the size that fits you";
+
+    document.getElementById("chooseTitle").textContent =
+      "Choose a category";
+
+    document.getElementById("chooseDesc").textContent =
+      "Choose your category first so we can use the right size chart.";
+
+    document.getElementById("menText").textContent = "Men";
+    document.getElementById("womenText").textContent = "Women";
+    document.getElementById("kidsText").textContent = "Kids";
+
+    document.getElementById("backText").textContent = "Back";
+    document.getElementById("detailsTitle").textContent = "Your details";
+
+    document.getElementById("detailsDesc").textContent =
+      "Enter your height and weight and we'll help you find the closest size.";
+
+    document.getElementById("heightLabel").textContent = "Height";
+    document.getElementById("weightLabel").textContent = "Weight";
+    document.getElementById("ageLabel").textContent = "Age";
+    document.getElementById("ageUnit").textContent = "years";
+
+    document.getElementById("calculateBtn").textContent =
+      "Find my size";
+
+    document.getElementById("privacy").textContent =
+      "Your information is only used to calculate your size on this page and is not saved.";
+
+    document.getElementById("againText").textContent = "Start again";
+
+    document.getElementById("resultTitle").textContent =
+      "Your recommended size";
+
+    document.getElementById("yourSize").textContent =
+      "Recommended size";
+
+    document.getElementById("fitResult").textContent =
+      "This is the closest size for your details";
+
+    document.getElementById("resultNote").textContent =
+      "The recommendation considers your height, weight, age and selected category.";
+
+    document.getElementById("whatsappBtn").textContent =
+      "CHAT WITH VYBE";
+
+    document.getElementById("whatsappNote").innerHTML =
+      "This button will take you to the VYBE WhatsApp chat for purchasing or questions.<br>You are free to choose what you want to write. There is no obligation to purchase.";
+
+  }else{
+
+    document.getElementById("subtitle").textContent =
+      "اعرف مقاسك المناسب بسهولة";
+
+    document.getElementById("chooseTitle").textContent =
+      "اختار الفئة";
+
+    document.getElementById("chooseDesc").textContent =
+      "اختار الفئة أولًا حتى نستخدم جدول المقاسات المناسب.";
+
+    document.getElementById("menText").textContent = "رجال";
+    document.getElementById("womenText").textContent = "نساء";
+    document.getElementById("kidsText").textContent = "أطفال";
+
+    document.getElementById("backText").textContent = "رجوع";
+    document.getElementById("detailsTitle").textContent = "بياناتك";
+
+    document.getElementById("detailsDesc").textContent =
+      "أدخل طولك ووزنك، وسنساعدك في اختيار المقاس الأقرب.";
+
+    document.getElementById("heightLabel").textContent = "الطول";
+    document.getElementById("weightLabel").textContent = "الوزن";
+    document.getElementById("ageLabel").textContent = "العمر";
+    document.getElementById("ageUnit").textContent = "سنة";
+
+    document.getElementById("calculateBtn").textContent =
+      "اعرف مقاسي";
+
+    document.getElementById("privacy").textContent =
+      "معلوماتك تُستخدم فقط لحساب المقاس داخل هذه الصفحة ولا يتم حفظها.";
+
+    document.getElementById("againText").textContent =
+      "ابدأ من جديد";
+
+    document.getElementById("resultTitle").textContent =
+      "المقاس المقترح لك";
+
+    document.getElementById("yourSize").textContent =
+      "مقاسك المقترح";
+
+    document.getElementById("fitResult").textContent =
+      "هذا هو المقاس الأقرب لبياناتك";
+
+    document.getElementById("resultNote").textContent =
+      "المقاس المقترح يعتمد على الطول والوزن والعمر والفئة المختارة.";
+
+    document.getElementById("whatsappBtn").textContent =
+      "CHAT WITH VYBE";
+
+    document.getElementById("whatsappNote").innerHTML =
+      "هذا الزر سينقلك إلى محادثة VYBE على واتساب للشراء أو الاستفسار.<br>عند دخولك للمحادثة أنت حر في اختيار ما تريد كتابته، ولا يوجد أي التزام بالشراء.";
+
+  }
+
+}
+
+function selectCategory(type){
+
+  category = type;
+
+  document.getElementById("step1").classList.remove("active");
+  document.getElementById("step2").classList.add("active");
+
+  if(type==="kids"){
+
+    document.getElementById("ageGroup").style.display = "block";
+
+  }else{
+
+    document.getElementById("ageGroup").style.display = "none";
+
+  }
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function goBack(){
+
+  document.getElementById("step2").classList.remove("active");
+  document.getElementById("step1").classList.add("active");
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function restart(){
+
+  category = "";
+
+  document.getElementById("height").value = "";
+  document.getElementById("weight").value = "";
+  document.getElementById("age").value = "";
+
+  document.getElementById("step3").classList.remove("active");
+  document.getElementById("step1").classList.add("active");
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function showError(id,message){
+
+  const el = document.getElementById(id);
+
+  el.textContent = message;
+  el.style.display = "block";
+}
+
+function clearErrors(){
+
+  document.querySelectorAll(".error").forEach(el=>{
+    el.style.display="none";
+  });
+
+}
+
+function calculate(){
+
+  clearErrors();
+
+  const height = Number(document.getElementById("height").value);
+  const weight = Number(document.getElementById("weight").value);
+  const age = Number(document.getElementById("age").value);
+
+  let valid = true;
+
+  if(!height || height < 50 || height > 230){
+
+    showError(
+      "heightError",
+      language==="ar"
+      ? "أدخل طولًا صحيحًا."
+      : "Enter a valid height."
+    );
+
+    valid = false;
+  }
+
+  if(!weight || weight < 5 || weight > 250){
+
+    showError(
+      "weightError",
+      language==="ar"
+      ? "أدخل وزنًا صحيحًا."
+      : "Enter a valid weight."
+    );
+
+    valid = false;
+  }
+
+  if(category==="kids" && (!age || age < 1 || age > 15)){
+
+    showError(
+      "ageError",
+      language==="ar"
+      ? "أدخل عمرًا صحيحًا للأطفال."
+      : "Enter a valid child's age."
+    );
+
+    valid = false;
+  }
+
+  if(!valid) return;
+
+  let recommended;
+
+  if(category==="kids"){
+
+    recommended = calculateKids(age,height,weight);
+
+  }else{
+
+    recommended = calculateAdult(category,height,weight);
+
+  }
+
+  document.getElementById("sizeResult").textContent =
+    recommended;
+
+  document.getElementById("step2").classList.remove("active");
+  document.getElementById("step3").classList.add("active");
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function calculateAdult(type,height,weight){
+
+  const table = sizes[type];
+
+  /*
+    وزن وطول العميل لا يتم مقارنتهما مباشرة بأبعاد التيشيرت.
+    نستخدم BMI كعامل مساعد لتقدير البنية، ثم نختار المقاس
+    بناءً على نطاقات الطول والوزن.
+  */
+
+  const bmi = weight / Math.pow(height/100,2);
+
+  let target;
+
+  if(type==="men"){
+
+    if(height < 165) target = "S";
+    else if(height < 172) target = "M";
+    else if(height < 178) target = "L";
+    else if(height < 184) target = "XL";
+    else target = "2XL";
+
+    if(weight >= 100) target = "3XL";
+    else if(weight >= 90) target = "2XL";
+    else if(weight >= 82) target = "XL";
+    else if(weight >= 74) target = "L";
+    else if(weight >= 66) target = "M";
+    else target = "S";
+
+  }else{
+
+    if(height < 155) target = "XS";
+    else if(height < 163) target = "S";
+    else if(height < 170) target = "M";
+    else if(height < 177) target = "L";
+    else target = "XL";
+
+    if(weight >= 80) target = "XL";
+    else if(weight >= 70) target = "L";
+    else if(weight >= 60) target = "M";
+    else if(weight >= 50) target = "S";
+    else target = "XS";
+  }
+
+  /*
+    تعديل بسيط حسب BMI حتى لا يعتمد القرار على عامل واحد فقط.
+  */
+
+  if(bmi >= 30){
+
+    const index = Math.min(
+      table.length-1,
+      table.findIndex(x=>x.size===target)+1
+    );
+
+    if(index>=0) return table[index].size;
+  }
+
+  const exact = table.find(x=>x.size===target);
+
+  return exact ? exact.size : table[Math.floor(table.length/2)].size;
+}
+
+function calculateKids(age,height,weight){
+
+  const table = sizes.kids;
+
+  let target;
+
+  if(age <= 2) target="2Y";
+  else if(age <= 4) target="4Y";
+  else if(age <= 6) target="6Y";
+  else if(age <= 8) target="8Y";
+  else if(age <= 10) target="10Y";
+  else target="12Y";
+
+  /*
+    الطول عامل إضافي للأطفال.
+  */
+
+  if(height <= 100) target="4Y";
+  if(height > 100 && height <= 115) target="6Y";
+  if(height > 115 && height <= 130) target="8Y";
+  if(height > 130 && height <= 145) target="10Y";
+  if(height > 145) target="12Y";
+
+  const exact = table.find(x=>x.size===target);
+
+  return exact ? exact.size : "8Y";
+}
+
+</script>
+
+</body>
+</html>
