@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ffffff">
-<title>VYBE Size Finder</title>
+<title>VYBE | Find Your Size</title>
 
 <style>
 :root{
@@ -148,8 +148,17 @@ h1{
 
 .category-icon{
   display:block;
-  font-size:27px;
-  margin-bottom:8px;
+  margin-bottom:10px;
+}
+
+.category-icon svg{
+  width:30px;
+  height:30px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
 .form-group{
@@ -318,38 +327,73 @@ input:focus{
     src="https://i.ibb.co/tTYjDh9r/VYBE-20260825-151712.png"
     alt="VYBE"
   >
+
   <div class="brand-title">VYBE SIZE FINDER</div>
-  <div class="subtitle" id="subtitle">اعرف مقاسك المناسب بسهولة</div>
+
+  <div class="subtitle" id="subtitle">
+    اعرف مقاسك المناسب بسهولة
+  </div>
 </header>
 
 <div class="language">
-  <button class="lang-btn active" id="arBtn" onclick="setLanguage('ar')">العربية</button>
-  <button class="lang-btn" id="enBtn" onclick="setLanguage('en')">English</button>
+  <button class="lang-btn active" id="arBtn" onclick="setLanguage('ar')">
+    العربية
+  </button>
+
+  <button class="lang-btn" id="enBtn" onclick="setLanguage('en')">
+    English
+  </button>
 </div>
 
 <!-- STEP 1 -->
 <section id="step1" class="step active">
 
   <h1 id="chooseTitle">اختار الفئة</h1>
+
   <div class="description" id="chooseDesc">
     اختار الفئة أولًا حتى نستخدم جدول المقاسات المناسب.
   </div>
 
   <div class="categories">
 
+    <!-- MEN -->
     <button class="category" onclick="selectCategory('men')">
-      <span class="category-icon">👕</span>
+
+      <span class="category-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M8 3l-5 3 3 5 2-1v11h8V10l2 1 3-5-5-3c-.8 1.2-2 2-4 2s-3.2-.8-4-2z"/>
+        </svg>
+      </span>
+
       <span id="menText">رجال</span>
+
     </button>
 
+    <!-- WOMEN -->
     <button class="category" onclick="selectCategory('women')">
-      <span class="category-icon">👚</span>
+
+      <span class="category-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M8 3l-5 3 3 6 2-1v10h8V11l2 1 3-6-5-3c-.8 1.2-2 2-4 2s-3.2-.8-4-2z"/>
+        </svg>
+      </span>
+
       <span id="womenText">نساء</span>
+
     </button>
 
+    <!-- KIDS -->
     <button class="category" onclick="selectCategory('kids')">
-      <span class="category-icon">🧒</span>
+
+      <span class="category-icon">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="3.5"/>
+          <path d="M5 21c.6-4.2 3-6.5 7-6.5s6.4 2.3 7 6.5"/>
+        </svg>
+      </span>
+
       <span id="kidsText">أطفال</span>
+
     </button>
 
   </div>
@@ -359,7 +403,9 @@ input:focus{
 <!-- STEP 2 -->
 <section id="step2" class="step">
 
-  <button class="back" onclick="goBack()">← <span id="backText">رجوع</span></button>
+  <button class="back" onclick="goBack()">
+    ← <span id="backText">رجوع</span>
+  </button>
 
   <h1 id="detailsTitle">بياناتك</h1>
 
@@ -368,33 +414,79 @@ input:focus{
   </div>
 
   <div class="form-group">
+
     <label id="heightLabel">الطول</label>
+
     <div class="unit">
-      <input id="height" type="number" min="50" max="230" inputmode="numeric" placeholder="مثال: 179">
+
+      <input
+        id="height"
+        type="number"
+        min="50"
+        max="230"
+        inputmode="numeric"
+        placeholder="مثال: 179"
+      >
+
       <span>cm</span>
+
     </div>
+
     <div class="error" id="heightError"></div>
+
   </div>
 
   <div class="form-group">
+
     <label id="weightLabel">الوزن</label>
+
     <div class="unit">
-      <input id="weight" type="number" min="5" max="250" inputmode="numeric" placeholder="مثال: 80">
+
+      <input
+        id="weight"
+        type="number"
+        min="5"
+        max="250"
+        inputmode="numeric"
+        placeholder="مثال: 80"
+      >
+
       <span>kg</span>
+
     </div>
+
     <div class="error" id="weightError"></div>
+
   </div>
 
-  <div class="form-group" id="ageGroup">
+  <div class="form-group" id="ageGroup" style="display:none;">
+
     <label id="ageLabel">العمر</label>
+
     <div class="unit">
-      <input id="age" type="number" min="1" max="100" inputmode="numeric" placeholder="مثال: 25">
+
+      <input
+        id="age"
+        type="number"
+        min="1"
+        max="100"
+        inputmode="numeric"
+        placeholder="مثال: 10"
+      >
+
       <span id="ageUnit">سنة</span>
+
     </div>
+
     <div class="error" id="ageError"></div>
+
   </div>
 
-  <button class="primary" onclick="calculate()" id="calculateBtn">
+  <button
+    class="primary"
+    onclick="calculate()"
+    id="calculateBtn"
+  >
     اعرف مقاسي
   </button>
 
@@ -407,17 +499,25 @@ input:focus{
 <!-- STEP 3 -->
 <section id="step3" class="step">
 
-  <button class="back" onclick="restart()">← <span id="againText">ابدأ من جديد</span></button>
+  <button class="back" onclick="restart()">
+    ← <span id="againText">ابدأ من جديد</span>
+  </button>
 
   <div class="result">
 
-    <h1 id="resultTitle">المقاس المقترح لك</h1>
+    <h1 id="resultTitle">
+      المقاس المقترح لك
+    </h1>
 
     <div class="result-card">
 
-      <div class="result-label" id="yourSize">مقاسك المقترح</div>
+      <div class="result-label" id="yourSize">
+        مقاسك المقترح
+      </div>
 
-      <div class="size" id="sizeResult">M</div>
+      <div class="size" id="sizeResult">
+        M
+      </div>
 
       <div class="fit" id="fitResult">
         هذا هو المقاس الأقرب لبياناتك
@@ -459,30 +559,30 @@ input:focus{
 const sizes = {
 
   men: [
-    {size:"XS", height:61, width:46},
-    {size:"S", height:70, width:48},
-    {size:"M", height:73, width:50},
-    {size:"L", height:75, width:52},
-    {size:"XL", height:77, width:56},
-    {size:"2XL", height:79, width:64},
-    {size:"3XL", height:81, width:67}
+    {size:"XS"},
+    {size:"S"},
+    {size:"M"},
+    {size:"L"},
+    {size:"XL"},
+    {size:"2XL"},
+    {size:"3XL"}
   ],
 
   women: [
-    {size:"XS", height:63, width:38},
-    {size:"S", height:66, width:40},
-    {size:"M", height:68, width:44},
-    {size:"L", height:70, width:47},
-    {size:"XL", height:73, width:50}
+    {size:"XS"},
+    {size:"S"},
+    {size:"M"},
+    {size:"L"},
+    {size:"XL"}
   ],
 
   kids: [
-    {size:"2Y", height:36, width:31},
-    {size:"4Y", height:41, width:34},
-    {size:"6Y", height:46, width:37},
-    {size:"8Y", height:51, width:40},
-    {size:"10Y", height:56, width:43},
-    {size:"12Y", height:59, width:45}
+    {size:"2Y"},
+    {size:"4Y"},
+    {size:"6Y"},
+    {size:"8Y"},
+    {size:"10Y"},
+    {size:"12Y"}
   ]
 
 };
@@ -497,8 +597,11 @@ function setLanguage(lang){
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
 
-  document.getElementById("arBtn").classList.toggle("active",lang==="ar");
-  document.getElementById("enBtn").classList.toggle("active",lang==="en");
+  document.getElementById("arBtn")
+    .classList.toggle("active",lang==="ar");
+
+  document.getElementById("enBtn")
+    .classList.toggle("active",lang==="en");
 
   if(lang==="en"){
 
@@ -516,7 +619,9 @@ function setLanguage(lang){
     document.getElementById("kidsText").textContent = "Kids";
 
     document.getElementById("backText").textContent = "Back";
-    document.getElementById("detailsTitle").textContent = "Your details";
+
+    document.getElementById("detailsTitle").textContent =
+      "Your details";
 
     document.getElementById("detailsDesc").textContent =
       "Enter your height and weight and we'll help you find the closest size.";
@@ -532,7 +637,8 @@ function setLanguage(lang){
     document.getElementById("privacy").textContent =
       "Your information is only used to calculate your size on this page and is not saved.";
 
-    document.getElementById("againText").textContent = "Start again";
+    document.getElementById("againText").textContent =
+      "Start again";
 
     document.getElementById("resultTitle").textContent =
       "Your recommended size";
@@ -568,7 +674,9 @@ function setLanguage(lang){
     document.getElementById("kidsText").textContent = "أطفال";
 
     document.getElementById("backText").textContent = "رجوع";
-    document.getElementById("detailsTitle").textContent = "بياناتك";
+
+    document.getElementById("detailsTitle").textContent =
+      "بياناتك";
 
     document.getElementById("detailsDesc").textContent =
       "أدخل طولك ووزنك، وسنساعدك في اختيار المقاس الأقرب.";
@@ -613,28 +721,42 @@ function selectCategory(type){
 
   category = type;
 
-  document.getElementById("step1").classList.remove("active");
-  document.getElementById("step2").classList.add("active");
+  document.getElementById("step1")
+    .classList.remove("active");
+
+  document.getElementById("step2")
+    .classList.add("active");
 
   if(type==="kids"){
 
-    document.getElementById("ageGroup").style.display = "block";
+    document.getElementById("ageGroup")
+      .style.display = "block";
 
   }else{
 
-    document.getElementById("ageGroup").style.display = "none";
+    document.getElementById("ageGroup")
+      .style.display = "none";
 
   }
 
-  window.scrollTo({top:0,behavior:"smooth"});
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
 function goBack(){
 
-  document.getElementById("step2").classList.remove("active");
-  document.getElementById("step1").classList.add("active");
+  document.getElementById("step2")
+    .classList.remove("active");
 
-  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById("step1")
+    .classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
 function restart(){
@@ -645,10 +767,16 @@ function restart(){
   document.getElementById("weight").value = "";
   document.getElementById("age").value = "";
 
-  document.getElementById("step3").classList.remove("active");
-  document.getElementById("step1").classList.add("active");
+  document.getElementById("step3")
+    .classList.remove("active");
 
-  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById("step1")
+    .classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
 function showError(id,message){
@@ -661,9 +789,10 @@ function showError(id,message){
 
 function clearErrors(){
 
-  document.querySelectorAll(".error").forEach(el=>{
-    el.style.display="none";
-  });
+  document.querySelectorAll(".error")
+    .forEach(el=>{
+      el.style.display="none";
+    });
 
 }
 
@@ -671,9 +800,14 @@ function calculate(){
 
   clearErrors();
 
-  const height = Number(document.getElementById("height").value);
-  const weight = Number(document.getElementById("weight").value);
-  const age = Number(document.getElementById("age").value);
+  const height =
+    Number(document.getElementById("height").value);
+
+  const weight =
+    Number(document.getElementById("weight").value);
+
+  const age =
+    Number(document.getElementById("age").value);
 
   let valid = true;
 
@@ -701,7 +835,10 @@ function calculate(){
     valid = false;
   }
 
-  if(category==="kids" && (!age || age < 1 || age > 15)){
+  if(
+    category==="kids" &&
+    (!age || age < 1 || age > 15)
+  ){
 
     showError(
       "ageError",
@@ -719,112 +856,68 @@ function calculate(){
 
   if(category==="kids"){
 
-    recommended = calculateKids(age,height,weight);
+    recommended =
+      calculateKids(age,height,weight);
 
   }else{
 
-    recommended = calculateAdult(category,height,weight);
+    recommended =
+      calculateAdult(category,height,weight);
 
   }
 
-  document.getElementById("sizeResult").textContent =
-    recommended;
+  document.getElementById("sizeResult")
+    .textContent = recommended;
 
-  document.getElementById("step2").classList.remove("active");
-  document.getElementById("step3").classList.add("active");
+  document.getElementById("step2")
+    .classList.remove("active");
 
-  window.scrollTo({top:0,behavior:"smooth"});
+  document.getElementById("step3")
+    .classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 }
 
 function calculateAdult(type,height,weight){
 
-  const table = sizes[type];
-
-  /*
-    وزن وطول العميل لا يتم مقارنتهما مباشرة بأبعاد التيشيرت.
-    نستخدم BMI كعامل مساعد لتقدير البنية، ثم نختار المقاس
-    بناءً على نطاقات الطول والوزن.
-  */
-
-  const bmi = weight / Math.pow(height/100,2);
-
-  let target;
-
   if(type==="men"){
 
-    if(height < 165) target = "S";
-    else if(height < 172) target = "M";
-    else if(height < 178) target = "L";
-    else if(height < 184) target = "XL";
-    else target = "2XL";
+    if(weight >= 100) return "3XL";
+    if(weight >= 90) return "2XL";
+    if(weight >= 82) return "XL";
+    if(weight >= 74) return "L";
+    if(weight >= 66) return "M";
+    if(weight >= 58) return "S";
 
-    if(weight >= 100) target = "3XL";
-    else if(weight >= 90) target = "2XL";
-    else if(weight >= 82) target = "XL";
-    else if(weight >= 74) target = "L";
-    else if(weight >= 66) target = "M";
-    else target = "S";
+    return "XS";
 
-  }else{
-
-    if(height < 155) target = "XS";
-    else if(height < 163) target = "S";
-    else if(height < 170) target = "M";
-    else if(height < 177) target = "L";
-    else target = "XL";
-
-    if(weight >= 80) target = "XL";
-    else if(weight >= 70) target = "L";
-    else if(weight >= 60) target = "M";
-    else if(weight >= 50) target = "S";
-    else target = "XS";
   }
 
-  /*
-    تعديل بسيط حسب BMI حتى لا يعتمد القرار على عامل واحد فقط.
-  */
+  if(type==="women"){
 
-  if(bmi >= 30){
+    if(weight >= 80) return "XL";
+    if(weight >= 70) return "L";
+    if(weight >= 60) return "M";
+    if(weight >= 50) return "S";
 
-    const index = Math.min(
-      table.length-1,
-      table.findIndex(x=>x.size===target)+1
-    );
+    return "XS";
 
-    if(index>=0) return table[index].size;
   }
 
-  const exact = table.find(x=>x.size===target);
-
-  return exact ? exact.size : table[Math.floor(table.length/2)].size;
 }
 
 function calculateKids(age,height,weight){
 
-  const table = sizes.kids;
+  if(age <= 2) return "2Y";
+  if(age <= 4) return "4Y";
+  if(age <= 6) return "6Y";
+  if(age <= 8) return "8Y";
+  if(age <= 10) return "10Y";
 
-  let target;
-
-  if(age <= 2) target="2Y";
-  else if(age <= 4) target="4Y";
-  else if(age <= 6) target="6Y";
-  else if(age <= 8) target="8Y";
-  else if(age <= 10) target="10Y";
-  else target="12Y";
-
-  /*
-    الطول عامل إضافي للأطفال.
-  */
-
-  if(height <= 100) target="4Y";
-  if(height > 100 && height <= 115) target="6Y";
-  if(height > 115 && height <= 130) target="8Y";
-  if(height > 130 && height <= 145) target="10Y";
-  if(height > 145) target="12Y";
-
-  const exact = table.find(x=>x.size===target);
-
-  return exact ? exact.size : "8Y";
+  return "12Y";
 }
 
 </script>
